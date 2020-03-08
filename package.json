@@ -1,0 +1,29 @@
+{
+  "name": "appci",
+  "description": "command for app continuous Integration",
+  "version": "1.0.0",
+  "main": "null",
+  "bin": {
+    "appci-number": "./appci-number.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mutix-co/appci.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mutix-co/appci/issues"
+  },
+  "homepage": "https://github.com/mutix-co/appci#readme",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "commander": "^4.1.1",
+    "googleapis": "^47.0.0",
+    "jws": "^4.0.0",
+    "lodash": "^4.17.15"
+  }
+}
