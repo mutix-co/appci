@@ -19,8 +19,8 @@ program
   .command("apple [app_identifier]")
   .option("-V, --app_version [string]", "The version number whose latest build number we want")
   .option("-k, --private_key [string]", "Your private key or use APPLE_PRIVATE_KEY")
-  .option("-k, --key_identifier [string]", "Your private key ID from App Store Connect (Ex: 2X9R4HXF34) or use APPLE_KEY_IDENTIFIER")
-  .option("-s, --issuer_id [string]", "Issuer ID Your issuer ID from the API Keys page in App Store Connect (Ex: 57246542-96fe-1a63-e053-0824d011072a) or use APPLE_ISSUER_ID")
+  .option("-K, --key_identifier [string]", "Your private key ID from App Store Connect (Ex: 2X9R4HXF34) or use APPLE_KEY_IDENTIFIER")
+  .option("-S, --issuer_id [string]", "Issuer ID Your issuer ID from the API Keys page in App Store Connect (Ex: 57246542-96fe-1a63-e053-0824d011072a) or use APPLE_ISSUER_ID")
   .option("-i, --increment", "increment build number")
   .option("--expo [file]", "sets the build number to expo app.json")
   .action(function(appIdentifier, options) {
