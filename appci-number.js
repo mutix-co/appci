@@ -39,11 +39,11 @@ program
     const qs = { "filter[app]": appIdentifier };
     if (options.app_version) qs["filter[preReleaseVersion.version]"] = options.app_version;
 
-    const url = `https://api.appstoreconnect.apple.com/v1/builds?${_.map(qs, (v, k) => `${k}=${v}`).join("&")}`
+    const url = `https://api.appstoreconnect.apple.com/v1/builds?${_.map(qs, (v, k) => `${k}=${v}`).join("&")}`;
     (async () => {
       try {
         const res = await axios.get(url, { headers: { Authorization: `Bearer ${token}` } });
-        const buildNumber = _.max(_.map(res.data.data, "attributes.version")) + (options.increment ? 1 : 0);
+        const buildNumber = _.max(_.map(res.data.data, ({ attributes }) => Number(attributes.version))) + (options.increment ? 1 : 0);
         console.log(buildNumber);
 
         if (options.expo) {
@@ -79,7 +79,7 @@ program
 
         const editId = _.get(await androidpublisher.edits.insert({ packageName }), 'data.id');
         const bundles = _.get(await androidpublisher.edits.bundles.list({ editId, packageName }), 'data.bundles');
-        const versionCode = _.max(_.map(bundles, 'versionCode')) + (options.increment ? 1 : 0);
+        const versionCode = _.max(_.map(bundles, ({ versionCode }) => Number(versionCode))) + (options.increment ? 1 : 0);
         console.log(versionCode);
 
         if (options.expo) {
