@@ -15,6 +15,21 @@ function assertResult(value, ThrowError) {
 
 const { env } = process;
 
+function setExpo(value, path) {
+  const file = path || `${process.cwd()}/app.json`;
+  const expo = JSON.parse(fs.readFileSync(file));
+  expo.expo.ios.buildNumber = String(value);
+  expo.expo.android.versionCode = Number(value) || 0;
+  fs.writeFileSync(file, JSON.stringify(expo, null, 2));
+}
+
+program
+  .command("expo [number]")
+  .option("-p, --path [file]", "The path of app.json")
+  .action(function(number, options) {
+    setExpo(number, options.path);
+  });
+
 program
   .command("apple [app_identifier]")
   .option("-V, --app_version [string]", "The version number whose latest build number we want")
@@ -46,11 +61,7 @@ program
         const buildNumber = _.max(_.map(res.data.data, ({ attributes }) => Number(attributes.version))) + (options.increment ? 1 : 0);
         console.log(buildNumber);
 
-        if (options.expo) {
-          const expo = JSON.parse(fs.readFileSync(options.expo));
-          expo.expo.ios.buildNumber = String(buildNumber);
-          fs.writeFileSync(expo, JSON.stringify(expo, null, 2));
-        }
+        if (options.expo) setExpo(buildNumber, options.expo);
       } catch (error) {
         console.error(error);
       }
@@ -82,11 +93,7 @@ program
         const versionCode = _.max(_.map(bundles, ({ versionCode }) => Number(versionCode))) + (options.increment ? 1 : 0);
         console.log(versionCode);
 
-        if (options.expo) {
-          const expo = JSON.parse(fs.readFileSync(options.expo));
-          expo.expo.android.versionCode = Number(versionCode);
-          fs.writeFileSync(options.expo, JSON.stringify(expo, null, 2));
-        }
+        if (options.expo) setExpo(versionCode, options.expo);
       } catch (error) {
         console.error(error);
       }

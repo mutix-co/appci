@@ -1,7 +1,7 @@
 {
   "name": "appci",
   "description": "command for app continuous Integration",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "null",
   "bin": {
     "appci-number": "./appci-number.js"
