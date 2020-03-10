@@ -15,19 +15,32 @@ function assertResult(value, ThrowError) {
 
 const { env } = process;
 
-function setExpo(value, path) {
+function setAppleExpo(value, path) {
   const file = path || `${process.cwd()}/app.json`;
   const expo = JSON.parse(fs.readFileSync(file));
   expo.expo.ios.buildNumber = String(value);
+  fs.writeFileSync(file, JSON.stringify(expo, null, 2));
+}
+
+function setAndroidExpo(value, path) {
+  const file = path || `${process.cwd()}/app.json`;
+  const expo = JSON.parse(fs.readFileSync(file));
   expo.expo.android.versionCode = Number(value) || 0;
   fs.writeFileSync(file, JSON.stringify(expo, null, 2));
 }
 
 program
-  .command("expo [number]")
+  .command("apple-expo [number]")
   .option("-p, --path [file]", "The path of app.json")
   .action(function(number, options) {
-    setExpo(number, options.path);
+    setAppleExpo(number, options.path);
+  });
+
+program
+  .command("android-expo [number]")
+  .option("-p, --path [file]", "The path of app.json")
+  .action(function(number, options) {
+    setAndroidExpo(number, options.path);
   });
 
 program
@@ -61,7 +74,7 @@ program
         const buildNumber = _.max(_.map(res.data.data, ({ attributes }) => Number(attributes.version))) + (options.increment ? 1 : 0);
         console.log(buildNumber);
 
-        if (options.expo) setExpo(buildNumber, options.expo);
+        if (options.expo) setAppleExpo(buildNumber, options.expo);
       } catch (error) {
         console.error(error);
       }
@@ -93,7 +106,7 @@ program
         const versionCode = _.max(_.map(bundles, ({ versionCode }) => Number(versionCode))) + (options.increment ? 1 : 0);
         console.log(versionCode);
 
-        if (options.expo) setExpo(versionCode, options.expo);
+        if (options.expo) setAndroidExpo(versionCode, options.expo);
       } catch (error) {
         console.error(error);
       }
