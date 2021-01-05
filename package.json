@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/mutix-co/appci#readme",
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "commander": "^4.1.1",
     "googleapis": "^47.0.0",
     "jws": "^4.0.0",
